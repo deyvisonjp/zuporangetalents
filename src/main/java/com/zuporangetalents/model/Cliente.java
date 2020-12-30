@@ -2,10 +2,8 @@ package com.zuporangetalents.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.zuporangetalents.dto.ClienteDTO;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -52,4 +50,5 @@ public class Cliente implements Serializable {
     @JsonIgnore //As contas não serão serializados
     @OneToMany(mappedBy = "cliente")
     private List<Conta> contas = new ArrayList<>();
+
 }
