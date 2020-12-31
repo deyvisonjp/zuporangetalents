@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteDTO {
-    private String name;
+    private String nome;
     private String email;
     private String cpf;
     private LocalDate dataNascimento;

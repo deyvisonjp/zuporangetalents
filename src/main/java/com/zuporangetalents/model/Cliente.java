@@ -40,7 +40,7 @@ public class Cliente implements Serializable {
     @NotBlank(message = "O campo 'CPF' não pode estar vazio.")
     @Size(min = 11, max = 11, message = "CPF inválido.")
     @org.hibernate.validator.constraints.br.CPF
-    private String CPF;
+    private String cpf;
 
     @Column(nullable = false, name="data_nascimento")
     @NotBlank(message = "O campo data de nascimento não pode estar vazio!")
@@ -50,5 +50,10 @@ public class Cliente implements Serializable {
     @JsonIgnore //As contas não serão serializados
     @OneToMany(mappedBy = "cliente")
     private List<Conta> contas = new ArrayList<>();
+
+    @Transient
+    public ClienteDTO clienteDTO(){
+        return new ClienteDTO(nome, email, cpf, dataNascimento);
+    }
 
 }

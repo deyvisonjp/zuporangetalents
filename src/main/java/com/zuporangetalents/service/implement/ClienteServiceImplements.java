@@ -46,7 +46,7 @@ public class ClienteServiceImplements implements ClienteService {
         }
 
         return clienteRepository.save(Cliente.builder()
-                .nome(clienteDto.getName())
+                .nome(clienteDto.getNome())
                 .email(clienteDto.getEmail())
                 .build());
     }
@@ -58,7 +58,7 @@ public class ClienteServiceImplements implements ClienteService {
 
         cliente.setNome(cliente.getNome());
         cliente.setEmail(cliente.getEmail());
-        cliente.setCPF(cliente.getCPF());
+        cliente.setCpf(cliente.getCpf());
         cliente.setDataNascimento(cliente.getDataNascimento());
 
         return clienteRepository.save(cliente);
