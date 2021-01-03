@@ -13,41 +13,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/zuptalents")
+@RequestMapping("/cliente")
 public class ClienteController {
 
-    @Autowired
     ClienteService clienteService;
 
+    @Autowired
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
     // Vamos mapear as rotas para os métodos criados em ClienteService
-    @RequestMapping(value = "/cliente/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ClienteDTO> get(@PathVariable int id){
         var clienteObj = clienteService.find(id).clienteDTO();
         return ResponseEntity.ok(clienteObj);
     }
 
-    @RequestMapping(value = "/clientes", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<ClienteDTO>> getAll(){
         var clienteObj = clienteService.findAll().stream().map(Cliente::clienteDTO).collect(Collectors.toList());
         return ResponseEntity.ok(clienteObj);
     }
 
-    @RequestMapping(value = "/criarCliente", method = RequestMethod.POST)
+    @RequestMapping(value = "/criar", method = RequestMethod.POST)
     public ResponseEntity<?> post(@Valid @RequestBody ClienteDTO clienteObjDTO) {
         clienteService.insert(clienteObjDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @RequestMapping(value = "/atualizarCliente/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/atualizar/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@Valid @RequestBody ClienteDTO clienteObjDTO, @PathVariable Integer id){
-        var obj =clienteService.update(id, clienteObjDTO);
-        return ResponseEntity.ok(obj.clienteDTO());
+        var clienteObj = clienteService.update(id, clienteObjDTO);
+        return ResponseEntity.ok(clienteObj.clienteDTO());
     }
 
-    @RequestMapping(value = "/deletatar/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletar/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id){
         clienteService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Cliente removido com sucesso.");
     }
 
 }

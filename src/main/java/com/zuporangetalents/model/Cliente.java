@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zuporangetalents.dto.ClienteDTO;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -36,16 +35,13 @@ public class Cliente implements Serializable {
     @Email(message = "Email inválido")
     private String email;
 
+    @CPF
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "O campo 'CPF' não pode estar vazio.")
-    @Size(min = 11, max = 11, message = "CPF inválido.")
-    @org.hibernate.validator.constraints.br.CPF
     private String cpf;
 
-    @Column(nullable = false, name="data_nascimento")
-    @NotBlank(message = "O campo data de nascimento não pode estar vazio!")
+    @Column(nullable = false)
     @JsonFormat(pattern="dd/MM/yyyy")
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
 
     @JsonIgnore //As contas não serão serializados
     @OneToMany(mappedBy = "cliente")

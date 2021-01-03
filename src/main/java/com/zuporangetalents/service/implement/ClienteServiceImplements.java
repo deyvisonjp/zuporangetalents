@@ -23,7 +23,7 @@ public class ClienteServiceImplements implements ClienteService {
 
         // Caso error
         if(!cliente.isPresent()) {
-            throw new DataIntegrationException("Cliente não existe");
+            throw new DataIntegrationException("O cliente [" + id + "] nao consta no banco.");
         }
 
         // Caso sucesso
@@ -48,18 +48,20 @@ public class ClienteServiceImplements implements ClienteService {
         return clienteRepository.save(Cliente.builder()
                 .nome(clienteDto.getNome())
                 .email(clienteDto.getEmail())
+                .cpf(clienteDto.getCpf())
+                .dataNascimento(clienteDto.getDataNascimento())
                 .build());
     }
 
     @Override
-    // Atualiza od dados do cliente por meio do Id
+    // Atualiza os dados do cliente por meio do Id
     public Cliente update(int idCliente, ClienteDTO clienteDTO) {
         var cliente = this.find(idCliente);
 
-        cliente.setNome(cliente.getNome());
-        cliente.setEmail(cliente.getEmail());
-        cliente.setCpf(cliente.getCpf());
-        cliente.setDataNascimento(cliente.getDataNascimento());
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setEmail(clienteDTO.getEmail());
+        cliente.setCpf(clienteDTO.getCpf());
+        cliente.setDataNascimento(clienteDTO.getDataNascimento());
 
         return clienteRepository.save(cliente);
     }

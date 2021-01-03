@@ -1,8 +1,9 @@
 package com.zuporangetalents.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Builder
@@ -12,5 +13,6 @@ public class ClienteDTO {
     private String nome;
     private String email;
     private String cpf;
-    private LocalDate dataNascimento;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private Date dataNascimento;
 }
